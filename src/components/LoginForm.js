@@ -89,6 +89,7 @@ export default LoginForm;
 
 const StyledLogin = styled.div`
   width: 100%;
+  text-align: center;
   .card {
     width: 600px;
     height: 600px;

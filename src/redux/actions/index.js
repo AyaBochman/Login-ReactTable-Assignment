@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { onUserLogin } from "./onUserLogin";
+import { onUserLoginSuccess } from "./onUserLoginSuccess";
 
-export const ON_USER_LOGIN = "ON_USER_LOGIN";
+export const ON_USER_LOGIN_SUCCESS = "ON_USER_LOGIN_SUCCESS";
 
-export { onUserLogin };
+export { onUserLoginSuccess };

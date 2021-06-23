@@ -13,9 +13,9 @@ function App() {
       <h1>LOGIN</h1>
       <BrowserRouter>
         <Switch>
-          {/* <Route path="/">
-            <LoginForm />
-          </Route> */}
+          <Route path="/info">
+            {isLoggedIn ? <h2>kaka info</h2> : <Redirect to="/" />}
+          </Route>
           <Route exact path="/">
             {isLoggedIn ? <Redirect to="/info" /> : <LoginForm />}
           </Route>

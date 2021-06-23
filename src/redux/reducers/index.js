@@ -1,14 +1,13 @@
-import { ON_USER_LOGIN } from "../actions";
+import { ON_USER_LOGIN_SUCCESS } from "../actions";
 
 export default function reducers(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case ON_USER_LOGIN: {
-      // eslint-disable-next-line no-console
-      console.log("inside reducer", payload);
+    case ON_USER_LOGIN_SUCCESS: {
       return {
         ...state,
         userToken: payload,
+        isLoggedIn: true,
       };
     }
     default:

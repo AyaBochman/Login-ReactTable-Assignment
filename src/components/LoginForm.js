@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import userLoginService from "../services/userLoginService";
 import { onUserLoginSuccess } from "../redux/actions/onUserLoginSuccess";
@@ -18,6 +19,7 @@ const inputVals = {
 
 const LoginForm = () => {
   const [inputs, setInput] = useState(inputVals);
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setInput({ ...inputs, [e.target.name]: e.target.value });
@@ -25,10 +27,12 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
       const result = await userLoginService(inputs);
       if (result) {
         dispatch(onUserLoginSuccess(result));
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -68,14 +72,18 @@ const LoginForm = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button
-                  className="login-btn"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleLogin}
-                >
-                  Login
-                </Button>
+                {isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <Button
+                    className="login-btn"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </form>

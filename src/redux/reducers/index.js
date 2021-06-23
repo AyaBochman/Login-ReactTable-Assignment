@@ -1,4 +1,4 @@
-import { ON_USER_LOGIN_SUCCESS } from "../actions";
+import { ON_USER_LOGIN_SUCCESS, ON_USER_DETAILS_SUCCESS } from "../actions";
 
 export default function reducers(state, action) {
   const { type, payload } = action;
@@ -10,6 +10,13 @@ export default function reducers(state, action) {
         isLoggedIn: true,
       };
     }
+    case ON_USER_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        userDetails: payload,
+      };
+    }
+    // case ON_USER_LOGIN_FAIL:
     default:
       return state;
   }

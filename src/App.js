@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
+import Info from "./components/Info";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => ({
@@ -14,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/info">
-            {isLoggedIn ? <h2>kaka info</h2> : <Redirect to="/" />}
+            {isLoggedIn ? <Info /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/">
             {isLoggedIn ? <Redirect to="/info" /> : <LoginForm />}

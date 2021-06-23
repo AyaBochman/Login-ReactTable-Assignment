@@ -8,7 +8,7 @@ export default function reducers(state, action) {
       console.log("inside reducer", payload);
       return {
         ...state,
-        userDetails: payload,
+        userToken: payload,
       };
     }
     default:

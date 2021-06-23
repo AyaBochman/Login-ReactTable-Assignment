@@ -16,7 +16,6 @@ export default function reducers(state, action) {
         userDetails: payload,
       };
     }
-    // case ON_USER_LOGIN_FAIL:
     default:
       return state;
   }

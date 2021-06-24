@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -55,7 +54,7 @@ const LoginForm = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -74,7 +73,6 @@ const LoginForm = () => {
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <TextField
-                  // required
                   className="input"
                   onChange={(e) => handleChange(e)}
                   name="email"
@@ -129,7 +127,6 @@ const StyledLogin = styled.div`
     display: flex;
     margin: 0 auto;
     flex-direction: column;
-    /* justify-content: center; */
     text-align: center;
   }
   .input,

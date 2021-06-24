@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -11,28 +12,51 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import userLoginService from "../services/userLoginService";
 import { onUserLoginSuccess } from "../redux/actions/onUserLoginSuccess";
+import { validateEmail, validatePassword } from "./commons/functions";
 
 const inputVals = {
   email: "",
   password: "",
 };
 
+const inputErrorsVals = {
+  email: { error: false, helperText: "" },
+  password: { error: false, helperText: "" },
+};
+
 const LoginForm = () => {
   const [inputs, setInput] = useState(inputVals);
+  const [inputsErrors, setInputError] = useState(inputErrorsVals);
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setInput({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const validateInputs = () => {
+    const isValidEmail = validateEmail(inputs.email);
+    const isValidPass = validatePassword(inputs.password);
+    setInputError({
+      email: { error: isValidEmail.isErr, helperText: isValidEmail.msg },
+      password: { error: isValidPass.isErr, helperText: isValidPass.msg },
+    });
+    return !isValidEmail.isErr && !isValidPass.isErr;
+  };
+
   const handleLogin = async () => {
     try {
-      setLoading(true);
-      const result = await userLoginService(inputs);
-      if (result) {
-        dispatch(onUserLoginSuccess(result));
+      //     validateEmail(inputs.email) && validatePassword(inputs.password);
+
+      const isValid = validateInputs();
+      console.log("valid?", isValid);
+      if (isValid) {
+        setLoading(true);
+        const result = await userLoginService(inputs);
+        if (result) {
+          dispatch(onUserLoginSuccess(result));
+        }
+        setLoading(false);
       }
-      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -58,6 +82,8 @@ const LoginForm = () => {
                   onChange={(e) => handleChange(e)}
                   name="email"
                   label="Email"
+                  error={inputsErrors.email.error}
+                  helperText={inputsErrors.email.helperText}
                   value={inputs.email}
                 />
               </Grid>
@@ -68,6 +94,8 @@ const LoginForm = () => {
                   name="password"
                   label="Password"
                   type="password"
+                  error={inputsErrors.password.error}
+                  helperText={inputsErrors.password.helperText}
                   value={inputs.password}
                 />
               </Grid>

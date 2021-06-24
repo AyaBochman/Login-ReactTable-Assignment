@@ -9,14 +9,13 @@ const userDetailsService = async (token) => {
   try {
     const res = await axios.get(url, config);
     if (res?.data?.length) {
-      console.log("wth data", res.data);
       sessionStorage.setItem("userDetails", JSON.stringify(res.data));
       return res.data;
     }
     throw new Error("Error in userDetailsService");
   } catch (error) {
-    console.log("error", error);
-    return error;
+    console.error(error);
+    return { err: true };
   }
 };
 

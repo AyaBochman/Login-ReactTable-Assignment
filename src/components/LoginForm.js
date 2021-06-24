@@ -45,14 +45,11 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      //     validateEmail(inputs.email) && validatePassword(inputs.password);
-
       const isValid = validateInputs();
-      console.log("valid?", isValid);
       if (isValid) {
         setLoading(true);
         const result = await userLoginService(inputs);
-        if (result) {
+        if (result && !result.err) {
           dispatch(onUserLoginSuccess(result));
         }
         setLoading(false);

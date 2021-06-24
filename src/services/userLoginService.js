@@ -11,8 +11,8 @@ const userLoginService = async (body) => {
     }
     throw new Error("Error in userLoginService");
   } catch (error) {
-    console.error("error", error);
-    return error;
+    console.error(error);
+    return { err: true };
   }
 };
 

@@ -1,5 +1,5 @@
 export default {
   userToken: JSON.parse(sessionStorage.getItem("userToken")) || {},
-  userDetails: [],
+  userDetails: JSON.parse(sessionStorage.getItem("userDetails")) || [],
   isLoggedIn: !!sessionStorage.getItem("userToken"),
 };

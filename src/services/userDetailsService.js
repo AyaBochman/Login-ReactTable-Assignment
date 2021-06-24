@@ -9,6 +9,7 @@ const userDetailsService = async (token) => {
   try {
     const res = await axios.get(url, config);
     if (res?.data?.length) {
+      console.log("wth data", res.data);
       sessionStorage.setItem("userDetails", JSON.stringify(res.data));
       return res.data;
     }

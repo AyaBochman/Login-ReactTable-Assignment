@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-undef */
 /* eslint-disable no-console */
 import React, { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,24 +7,20 @@ import userDetailsService from "../services/userDetailsService";
 import { onUserDetailsSuccess } from "../redux/actions/onUserDetailsSuccess";
 import Table from "./Tables/Table";
 
-// eslint-disable-next-line arrow-body-style
 const Info = () => {
   const [projectsData, setProjectsData] = useState([]);
-  // const [usersData, setUsersData] = useState([]);
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
   const { userToken } = useSelector((state) => ({
     userToken: state.userToken,
-    userDetails: state.userDetails,
   }));
 
   useEffect(() => {
     async function loadData() {
       try {
-        const userDetails = await userDetailsService(userToken.token);
-        if (userDetails.length) {
-          dispatch(onUserDetailsSuccess(userDetails));
-          setProjectsData(userDetails);
+        const userDetailsData = await userDetailsService(userToken.token);
+        if (userDetailsData.length) {
+          dispatch(onUserDetailsSuccess(userDetailsData));
+          setProjectsData(userDetailsData);
         }
       } catch (error) {
         console.log(error);
@@ -100,7 +94,6 @@ const Info = () => {
   );
 
   const generateCellProps = (cellInfo) => {
-    console.log("what is thissss", cellInfo);
     if (cellInfo.column.Header === "Score") {
       let cellColor;
       if (cellInfo.value > 90) {
@@ -117,14 +110,24 @@ const Info = () => {
     return { style: { background: "none" } };
   };
 
+  const calcAverage = (arr) => {
+    if (arr.length) {
+      const avg =
+        arr.reduce((a, b) => ({ score: a.score + b.score })).score / arr.length;
+      return avg;
+    }
+    return null;
+  };
+
   return (
     <StyledInfo>
       <h1>User Info</h1>
-      <Table
-        columns={userColumns}
-        data={[userToken]}
-        // getCellProps={(cellInfo) => generateCellProps(cellInfo)}
-      />
+      <Table columns={userColumns} data={[userToken]} />
+      <div>
+        {projectsData ? (
+          <h3>User Avg. Score: {calcAverage(projectsData)}</h3>
+        ) : null}
+      </div>
       <Table
         columns={projectColumns}
         data={projectsData}

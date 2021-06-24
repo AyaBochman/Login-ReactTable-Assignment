@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable arrow-body-style */
@@ -25,19 +24,14 @@ export default function ProjectsTable({
   getRowProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
 }) {
-  const {
-    getTableProps, // table props from react-table
-    getTableBodyProps, // table body props from react-table
-    headerGroups, // headerGroups, if your table has groupings
-    rows, // rows for the table based on the data passed
-    prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useSortBy
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+      },
+      useSortBy
+    );
 
   const getSorting = (column) => {
     if (column.isSorted) {

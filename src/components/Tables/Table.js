@@ -4,7 +4,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+
 import styled from "styled-components";
 
 const defaultPropGetter = () => ({});
@@ -30,42 +38,72 @@ export default function ProjectsTable({
 
   return (
     <StyledProjectsTable>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
+      {/* <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell align="right">Calories</TableCell>
+            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.calories}</TableCell>
+              <TableCell align="right">{row.fat}</TableCell>
+              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell>
+            </TableRow>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps(getRowProps(row))}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps([
-                        {
-                          className: cell.column.className,
-                          style: cell.column.style,
-                        },
-                        getColumnProps(cell.column),
-                        getCellProps(cell),
-                      ])}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
+    </TableContainer> */}
+      <TableContainer component={Paper}>
+        <Table {...getTableProps()}>
+          <TableHead>
+            {headerGroups.map((headerGroup) => (
+              <TableRow {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </TableRow>
+            ))}
+          </TableHead>
+          <TableBody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <TableRow {...row.getRowProps(getRowProps(row))}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <TableCell
+                        {...cell.getCellProps([
+                          {
+                            className: cell.column.className,
+                            style: cell.column.style,
+                          },
+                          getColumnProps(cell.column),
+                          getCellProps(cell),
+                        ])}
+                      >
+                        {cell.render("Cell")}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </StyledProjectsTable>
   );
 }
@@ -76,11 +114,11 @@ const StyledProjectsTable = styled.div`
   padding: 20px;
   table td,
   table th {
-    border: 1px solid black;
     padding: 8px;
     text-align: center;
   }
   table th {
-    background: lightgray;
+    color: #fff;
+    background: darkgrey;
   }
 `;
